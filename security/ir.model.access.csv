@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_care_experience,access.hr.care.experience,model_hr_care_experience,,1,1,1,1
+access_hr_care_clearance,access.hr.care.clearance,model_hr_care_clearance,,1,1,1,1
+
+
+
+
+
+
+
+

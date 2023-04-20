@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Email template -->
+        <record id="email_template_hr_request" model="mail.template">
+            <field name="name">HR Reminder: Experience Request</field>
+            <field name="model_id" ref="hr_self_care.model_hr_care_experience"/>
+            <field name="email_to">${ctx['users_char']}</field>
+            <field name="subject">Experience Request From ${object.name.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear HR Manager,
+                        <br /><br />
+                        Employee
+                        % if object.name:
+                            <strong>${object.name.name}</strong>
+                        %endif
+                        have requested there experience report. Please review there request and make the confirmation.
+                        <br /><br />
+                        Thank You.
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

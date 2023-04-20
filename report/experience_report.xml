@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_experience_report" model="ir.actions.report">
+        <field name="name">Experience Report</field>
+        <field name="model">hr.care.experience</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_self_care.print_employee_experience</field>
+        <field name="print_report_name">'Print Experience Report - %s' % (object.name.name)</field>
+        <field name="binding_model_id" ref="model_hr_care_experience"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="print_employee_experience">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-if="doc.state == 'approved'
+                                     and doc.request_type == 'evidence_request'">
+                            <strong class="text-center"><h2>To Whom It May Concern</h2></strong>
+                            <br/>
+                            <br/>
+                            <p>According to Mr/Ms. <span t-esc="doc['name'].name"/> who is the staff of our company, requested a
+                               testimonial of his/her work experience that is dated on his/her application on <span t-esc="doc['date']"/>.</p>
+
+                            <p>Thus, the aforementioned employee worked in our company:</p>
+
+                            <p>From <span t-esc="doc['current_contract'].date_start"/> he/she is working as <span t-esc="doc['current_contract'].job_id.name"/>
+                               in <span t-esc="doc['current_contract'].department_id.name"/> department by earning a gross monthly salary of <span t-esc="doc['current_contract'].wage"/> ETB</p>
+
+                            <p>In his/her stay in the company income tax and pension has been regularly deducted form his/her salary and paid to the regional tax office.</p>
+
+                            <p>Mr/Ms. <span t-esc="doc['name'].name"/> is hardworking, punctual and efficient person. He/She knows his/her duties and responsibilities, capable of working with a very good  capacity and has good spirit towards team spirit.</p>
+                            <br/>
+                            <br/>
+                            <strong class="text-center"><h3>Experiences</h3></strong>
+                            <br/>
+                            <table class="table table-condensed table-bordered" style="width: 100%">
+                                <thead>
+                                    <th class="text-center" style="width: 5%">Job Position</th>
+                                    <th class="text-center" style="width: 5%">Department</th>
+                                    <th class="text-center" style="width: 5%">Start Date</th>
+                                    <th class="text-center" style="width: 5%">End Date</th>
+                                    <th class="text-center" style="width: 5%">Salary</th>
+                                    <th class="text-center" style="width: 5%">Status</th>
+                                </thead>
+                                <t t-foreach="doc['hr_contract']" t-as="con">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span t-esc="con['job_id'].name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="con['department_id'].name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="con['date_start']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="con['date_end']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="con['wage']"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="con['state']"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                        </t>
+                        <t t-if="doc.state != 'approved'">
+                            <strong class="text-center">Your Request Must be approved first before your experience could be shown.</strong>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

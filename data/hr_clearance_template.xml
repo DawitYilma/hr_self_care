@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Email template -->
+        <record id="email_template_hr_clearance_request" model="mail.template">
+            <field name="name">HR Reminder: Clearance Request</field>
+            <field name="model_id" ref="hr_self_care.model_hr_care_experience"/>
+            <field name="email_to">${ctx['users_char']}</field>
+            <field name="subject">Clearance Request From ${object.employee_id.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear HR Manager,
+                        <br /><br />
+                        Employee
+                        % if object.employee_id:
+                            <strong>${object.employee_id.name}</strong>
+                        %endif
+                        have requested there experience report and are processing there clearance. Please review there request and make the confirmation.
+                        <br /><br />
+                        Thank You.
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_care_experience_form_view" model="ir.ui.view">
+      <field name="name">HR Care Experience</field>
+      <field name="model">hr.care.experience</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="HR Care Experience">
+          <header>
+            <button class="oe_highlight" id="request_exper" name="request_experience" string="Request Experience" type="object" states="new"/>
+            <button class="oe_highlight" id="request_approve" name="request_approve" string="Approve" type="object" states="request_sent"/>
+            <button class="oe_highlight" id="edit_resign_experience_report" name="edit_resign_experience_report" string="Edit PDF" type="object" states="approved"/>
+            <field name="state" options="{'fold_field': 'fold'}" statusbar_visible="new,request_sent,resignation,approved" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_title">
+                <h1><field name="name" class="oe_inline"/></h1>
+            </div>
+              <group>
+                <field name="request_type"/>
+                <field name="expected_revealing_date" attrs="{'required': [('request_type','=', 'resignation_request')], 'invisible':[('request_type', '!=', 'resignation_request')]}"/>
+              </group>
+              <group>
+                <group>
+                  <field name="date"/>
+                  <field name="work_phone"/>
+                  <field name="work_location"/>
+                  <field name="company_id"/>
+                </group>
+              </group>
+              <group>
+                <group>
+                  <field name="current_contract"/>
+                  <field name="department_id"/>
+                  <field name="parent_id"/>
+                  <field name="coach_id"/>
+                </group>
+              </group>
+
+              <notebook>
+                <page string="Contract">
+                  <field name="hr_contract">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="company_id" invisible="1"/>
+                      <field name="job_id"/>
+                      <field name="structure_type_id"/>
+                      <field name="resource_calendar_id"/>
+                      <field name="hr_responsible_id" />
+                      <field name="date_start"/>
+                      <field name="date_end"/>
+                      <field name="wage"/>
+                      <field name="state"/>
+                    </tree>
+                  </field>
+                </page>
+                <page string="Assets">
+                  <field name="account_asset">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="name"/>
+                      <field name="asset_type" />
+                      <field name="state" />
+                      <field name="salvage_value"/>
+                    </tree>
+                  </field>
+                </page>
+                <page string="Loan">
+                  <field name="loan">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="name"/>
+                      <field name="loan_amount"/>
+                      <field name="date" />
+                      <field name="installment"/>
+                      <field name="state"/>
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="hr_care_experience_tree_view" model="ir.ui.view">
+      <field name="name">HR Care Experience Tree</field>
+      <field name="model">hr.care.experience</field>
+      <field name="arch" type="xml">
+        <tree string="HR Care Experience">
+          <field name="name"/>
+          <field name="request_type"/>
+          <field name="work_phone"/>
+          <field name="work_location"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_care_experience_record" model="ir.actions.act_window">
+      <field name="name">HR Care Experience</field>
+      <field name="res_model">hr.care.experience</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="self_care_menu_root" name="Self Care" parent="hr.menu_hr_employee_payroll"/>
+    <menuitem sequence="1" action="hr_care_experience_record" id="hr_care_experience_menu_item" name="HR Care Experience" parent="self_care_menu_root"/>
+</odoo>

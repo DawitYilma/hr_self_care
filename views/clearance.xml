@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_care_clearance_form_view" model="ir.ui.view">
+      <field name="name">HR Care Clearance</field>
+      <field name="model">hr.care.clearance</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="HR Care Experience">
+          <header>
+            <button class="oe_highlight" id="inventory_approve" name="inventory_approve" string="Inventory Approve" type="object" states="new"/>
+            <button class="oe_highlight" id="finance_approve" name="finance_approve" string="Finance Approve" type="object" states="finance_approve"/>
+            <button class="oe_highlight" id="department_approve" name="department_approve" string="Department Approve" type="object" states="depart_approve"/>
+            <button class="oe_highlight" id="hr_approve" name="hr_approve" string="HR Approve" type="object" states="hr_approve"/>
+            <field name="state" options="{'fold_field': 'fold'}" statusbar_visible="new,inventory_approve,finance_approve,depart_approve,hr_approve,approved" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_title">
+                <h1><field name="name" class="oe_inline"/></h1>
+            </div>
+              <group>
+                <field name="employee_id"/>
+              </group>
+              <group>
+                <group>
+                  <field name="work_phone"/>
+                  <field name="work_location"/>
+                  <field name="company_id"/>
+                </group>
+              </group>
+              <group>
+                <group>
+                  <field name="department_id"/>
+                  <field name="parent_id"/>
+                  <field name="coach_id"/>
+                </group>
+              </group>
+
+              <notebook>
+                <page string="Contract">
+                  <field name="hr_contract">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="company_id" invisible="1"/>
+                      <field name="job_id"/>
+                      <field name="structure_type_id"/>
+                      <field name="resource_calendar_id" />
+                      <field name="hr_responsible_id" />
+                      <field name="date_start"/>
+                      <field name="date_end"/>
+                      <field name="wage" />
+                      <field name="state"/>
+                    </tree>
+                  </field>
+                </page>
+                <page string="Assets">
+                  <field name="account_asset">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="name"/>
+                      <field name="asset_type"/>
+                      <field name="state"/>
+                      <field name="salvage_value"/>
+                    </tree>
+                  </field>
+                </page>
+                <page string="Loan">
+                  <field name="loan">
+                    <tree editable="bottom" options="{'no_create': True}">
+                      <field name="name"/>
+                      <field name="loan_amount"/>
+                      <field name="date" />
+                      <field name="installment"/>
+                      <field name="state"/>
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="hr_care_clearance_tree_view" model="ir.ui.view">
+      <field name="name">HR Care Clearance Tree</field>
+      <field name="model">hr.care.clearance</field>
+      <field name="arch" type="xml">
+        <tree string="HR Care Experience">
+          <field name="name"/>
+          <field name="employee_id"/>
+          <field name="work_phone"/>
+          <field name="work_location"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="hr_care_clearance_record" model="ir.actions.act_window">
+      <field name="name">HR Care Clearance</field>
+      <field name="res_model">hr.care.clearance</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem sequence="2" action="hr_care_clearance_record" id="hr_care_clearance_menu_item" name="HR Care Clearance" parent="self_care_menu_root"/>
+</odoo>
